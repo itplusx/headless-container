@@ -1,0 +1,20 @@
+lib.container =< lib.contentElement
+lib.container {
+  fields {
+    content {
+      fields {
+        gridItems = JSON
+        gridItems {
+          dataProcessing {
+            1665156723 = ITplusX\HeadlessContainer\DataProcessing\ContainerProcessor
+            1665156723.as = gridItems
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+

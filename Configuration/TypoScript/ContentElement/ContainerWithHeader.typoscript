@@ -1,0 +1,14 @@
+lib.containerWithHeader =< lib.contentElementWithHeader
+lib.containerWithHeader {
+  fields {
+    content {
+      fields {
+        gridItems =< lib.container.fields.content.fields.gridItems
+      }
+    }
+  }
+}
+
+
+
+

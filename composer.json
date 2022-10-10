@@ -1,0 +1,54 @@
+{
+  "name": "itplusx/headless-container",
+  "type": "typo3-cms-extension",
+  "description": "Container Content Elements (EXT:container) json output for EXT:headless",
+  "keywords": [
+    "TYPO3",
+    "TYPO3 CMS",
+    "extension",
+    "container",
+    "Container Content Elements",
+    "headless"
+  ],
+  "homepage": "https://itplusx.de",
+  "support": {
+    "email": "typo3@itplusx.de",
+    "issues": "https://github.com/itplusx/headless_container/issues"
+  },
+  "authors": [
+    {
+      "name": "Ramón Schlosser",
+      "email": "schlosser@itplusx.de",
+      "role": "Developer",
+      "homepage": "https://itplusx.de"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "typo3/cms-core": "^11.5",
+    "b13/container": "^2.0",
+    "friendsoftypo3/headless": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ITplusX\\HeadlessContainer\\": "Classes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ITplusX\\HeadlessContainer\\Tests\\": "Tests/"
+    }
+  },
+  "replace": {
+    "typo3-ter/headless_container": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.0.x-dev"
+    },
+    "typo3/cms": {
+      "extension-key": "headless_container"
+    }
+  }
+}
