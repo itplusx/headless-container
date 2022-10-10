@@ -1,5 +1,5 @@
 # TYPO3 Extension `headless_container`
-This extension makes it possible to use [EXT:container](https://github.com/b13/container) with
+This TYPO3 extension makes it possible to use [EXT:container](https://github.com/b13/container) together with
 [EXT:headless](https://github.com/TYPO3-Initiatives/headless/).
 
 ## Installation
