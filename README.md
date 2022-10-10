@@ -1,4 +1,4 @@
-# headless_gridelements
+# TYPO3 Extension `headless_container`
 This extension makes it possible to use [EXT:container](https://github.com/b13/container) with
 [EXT:headless](https://github.com/TYPO3-Initiatives/headless/).
 
