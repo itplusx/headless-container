@@ -23,7 +23,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
 ## Usage
 1. Include TypoScript (see: [Include TypoScript from Extension](https://docs.typo3.org/m/typo3/reference-typoscript/11.5/en-us/UsingSetting/Entering.html#include-typoscript-from-extensions)
 2. Register your custom container element (see: [Registration of Container Elements](https://github.com/b13/container/tree/2.0.5#registration-of-container-elements))
-3. Define TypoScript for custom container element ...
+3. Define TypoScript ...
    * ... for simple container elements:
      ```
      tt_content.b13-2cols-with-header-container =< lib.container
