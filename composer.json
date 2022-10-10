@@ -41,7 +41,7 @@
     }
   },
   "replace": {
-    "typo3-ter/headless_container": "self.version"
+    "typo3-ter/headless-container": "self.version"
   },
   "extra": {
     "branch-alias": {
