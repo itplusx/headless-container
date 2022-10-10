@@ -104,7 +104,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             'tables' => 'tt_content',
         ];
 
-        $childElements = [];
+        $contentElements = [];
         foreach ($children as &$child) {
             if ($child['l18n_parent'] > 0) {
                 $conf['source'] = $child['l18n_parent'];
@@ -120,7 +120,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             $recordContentObjectRenderer->start($child, 'tt_content');
             $child = $this->contentDataProcessor->process($recordContentObjectRenderer, $processorConfiguration, $child);
 
-            $childElements[] = \json_decode($child['renderedContent'], true);
+            $contentElements[] = \json_decode($child['renderedContent'], true);
         }
 
         /** @var Registry $containerRegistry */
@@ -130,7 +130,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
                 'name' => $this->getLanguageService()->sL($containerRegistry->getColPosName($container->getCType(), $colPos)),
                 'colPos' => $colPos
             ],
-            'children' => $childElements,
+            'elements' => $contentElements,
         ];
     }
 

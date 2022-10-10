@@ -68,7 +68,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
           "name": "header",
           "colPos": 200
         },
-        "children": [
+        "elements": [
           {"id": 3, "type": "text", "colPos": 200, "categories": "", "appearance": { ... }, "content": { ... } }
         ]
       },
@@ -77,7 +77,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
           "name": "left side",
           "colPos": 201
         },
-        "children": [
+        "elements": [
           {"id": 4, "type": "text", "colPos": 201, "categories": "", "appearance": { ... }, "content": { ... } },
           {"id": 9, "type": "text", "colPos": 201, "categories": "", "appearance": { ... }, "content": { ... } }
         ]
@@ -87,7 +87,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
           "name": "right side",
           "colPos": 202
         },
-        "children": [
+        "elements": [
           {"id": 5, "type": "text", "colPos": 202, "categories": "", "appearance": { ... }, "content": { ... } }
         ]
       }
