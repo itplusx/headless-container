@@ -1,0 +1,12 @@
+# Exclude all content elements within a grid from being displayed on first level
+lib.content.select {
+    where.append = USER
+    where.append {
+        userFunc = ITplusX\HeadlessContainer\UserFunctions\GridRecords->getColPosList
+        stdWrap {
+            wrap = AND {#colPos} NOT IN (|)
+            noTrimWrap = | ||
+            required = 1
+        }
+    }
+}
