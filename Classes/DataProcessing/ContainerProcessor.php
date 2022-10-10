@@ -15,8 +15,8 @@ use B13\Container\Domain\Factory\Exception;
 use B13\Container\Domain\Factory\PageView\Frontend\ContainerFactory;
 use B13\Container\Domain\Model\Container;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use B13\Container\Tca\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use FriendsOfTYPO3\Headless\DataProcessing\DataProcessingTrait;
 use TYPO3\CMS\Frontend\ContentObject\RecordsContentObject;
@@ -24,22 +24,6 @@ use TYPO3\CMS\Frontend\ContentObject\RecordsContentObject;
 class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcessor
 {
     use DataProcessingTrait;
-
-    /**
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
-     * @param Registry $registry
-     */
-    public function __construct(ContainerFactory $containerFactory, ContentDataProcessor $contentDataProcessor)
-    {
-        parent::__construct($containerFactory, $contentDataProcessor);
-
-        $this->registry = GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class);
-    }
-
 
     public function process(
         ContentObjectRenderer $cObj,
@@ -139,9 +123,11 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             $childElements[] = \json_decode($child['renderedContent'], true);
         }
 
+        /** @var Registry $containerRegistry */
+        $containerRegistry = GeneralUtility::makeInstance(Registry::class);
         return [
             'config' => [
-                'name' => $this->getLanguageService()->sL($this->registry->getColPosName($container->getCType(), $colPos)),
+                'name' => $this->getLanguageService()->sL($containerRegistry->getColPosName($container->getCType(), $colPos)),
                 'colPos' => $colPos
             ],
             'children' => $childElements,
