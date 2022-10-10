@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  ITplusX\HeadlessContainer\:
+    resource: '../Classes/*'
+    public: true
