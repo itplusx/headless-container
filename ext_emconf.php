@@ -9,6 +9,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'ITplusX GmbH',
     'state' => 'alpha',
     'version' => '0.8.0-dev',
+    'clearCacheOnLoad' => true,
     'constraints' => [
         'depends' => [
             'php' => '7.4.0-8.99.99',
