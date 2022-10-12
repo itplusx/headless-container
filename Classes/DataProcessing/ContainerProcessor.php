@@ -49,13 +49,13 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             return $processedData;
         }
 
-        $gridItems = [];
-        $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'gridItems');
+        $items = [];
+        $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'items');
         $processorConfiguration['as'] = $targetVariableName;
         if (empty($processorConfiguration['colPos']) && empty($processorConfiguration['colPos.'])) {
             $allColPos = $container->getChildrenColPos();
             foreach ($allColPos as $colPos) {
-                $gridItems[] = $this->processColPos(
+                $items[] = $this->processColPos(
                     $cObj,
                     $container,
                     $colPos,
@@ -65,7 +65,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
                 );
             }
 
-            $processedData[$targetVariableName] = $gridItems;
+            $processedData[$targetVariableName] = $items;
 
         } else {
             if ($processorConfiguration['colPos.'] ?? null) {
@@ -74,7 +74,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
                 $colPos = (int)$processorConfiguration['colPos'];
             }
 
-            $gridItems = $this->processColPos(
+            $items = $this->processColPos(
                 $cObj,
                 $container,
                 $colPos,
@@ -83,7 +83,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
                 $processorConfiguration
             );
 
-            $processedData[$targetVariableName] = $gridItems;
+            $processedData[$targetVariableName] = $items;
         }
 
         return $this->removeDataIfnotAppendInConfiguration($processorConfiguration, $processedData);

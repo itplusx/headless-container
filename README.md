@@ -78,7 +78,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
     "headerPosition": "",
     "headerLink": "",
     "myCustomField": "myCustomValue",
-    "gridItems": [
+    "items": [
       {
         "config": {
           "name": "header",

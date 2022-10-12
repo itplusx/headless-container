@@ -3,11 +3,11 @@ lib.container {
   fields {
     content {
       fields {
-        gridItems = JSON
-        gridItems {
+        items = JSON
+        items {
           dataProcessing {
             1665156723 = ITplusX\HeadlessContainer\DataProcessing\ContainerProcessor
-            1665156723.as = gridItems
+            1665156723.as = items
           }
         }
       }

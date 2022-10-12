@@ -3,7 +3,7 @@ lib.containerWithHeader {
   fields {
     content {
       fields {
-        gridItems =< lib.container.fields.content.fields.gridItems
+        items =< lib.container.fields.content.fields.items
       }
     }
   }
