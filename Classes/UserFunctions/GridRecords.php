@@ -12,7 +12,8 @@ namespace ITplusX\HeadlessContainer\UserFunctions;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-final class GridRecords {
+final class GridRecords
+{
 
     /**
      * List all grid colPos values on the current page

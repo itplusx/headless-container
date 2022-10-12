@@ -30,7 +30,8 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
         array $contentObjectConfiguration,
         array $processorConfiguration,
         array $processedData
-    ): array {
+    ): array
+    {
         if (isset($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
             return $processedData;
         }
@@ -96,7 +97,8 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
         string $as,
         array $processedData,
         array $processorConfiguration
-    ): array {
+    ): array
+    {
         $children = $container->getChildrenByColPos($colPos);
 
         $contentRecordRenderer = new RecordsContentObject($cObj);
