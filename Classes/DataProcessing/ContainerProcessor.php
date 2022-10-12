@@ -130,7 +130,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
                 'name' => $this->getLanguageService()->sL($containerRegistry->getColPosName($container->getCType(), $colPos)),
                 'colPos' => $colPos
             ],
-            'elements' => $contentElements,
+            'contentElements' => $contentElements,
         ];
     }
 
