@@ -31,11 +31,12 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
 
 ## Usage
 
-1. Include TypoScript (
-   see: [Include TypoScript from Extension](https://docs.typo3.org/m/typo3/reference-typoscript/11.5/en-us/UsingSetting/Entering.html#include-typoscript-from-extensions)
-2. Register your custom container element (
-   see: [Registration of Container Elements](https://github.com/b13/container/tree/2.0.5#registration-of-container-elements))
-3. Define TypoScript ...
+1. Include TypoScript
+   _([as described by the TypoScript Reference](https://docs.typo3.org/m/typo3/reference-typoscript/11.5/en-us/UsingSetting/Entering.html#include-typoscript-from-extensions))_
+2. Register your custom container element
+   _([as described by EXT:container](https://github.com/b13/container/tree/2.0.5#registration-of-container-elements))_
+3. Define TypoScript ...  
+   _(assuming you CType is `b13-2cols-with-header-container`)_
     * ... for simple container elements:
       ```
       tt_content.b13-2cols-with-header-container =< lib.container
@@ -44,9 +45,9 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
       ```
       tt_content.b13-2cols-with-header-container =< lib.containerWithHeader
       ```
-    * ... for container elements with custom TCA fields (
-      see [Create custom content elements](https://docs.typo3.org/p/friendsoftypo3/headless/3.1/en-us/Developer/Index.html#create-custom-content-elements)
-      for further info):
+    * ... for container elements with custom TCA fields:  
+      _(see [EXT:headless docs](https://docs.typo3.org/p/friendsoftypo3/headless/3.1/en-us/Developer/Index.html#create-custom-content-elements)
+      for further info)_
       ```
       tt_content.b13-2cols-with-header-container =< lib.container
       tt_content.b13-2cols-with-header-container.fields.content.fields {
@@ -139,6 +140,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/11.
   }
 }
 ```
+
 
 ## Contribution
 
