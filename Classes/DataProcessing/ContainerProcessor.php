@@ -11,15 +11,12 @@ namespace ITplusX\HeadlessContainer\DataProcessing;
  * LICENSE.md file that was distributed with this source code.
  */
 
-use B13\Container\Domain\Factory\Exception;
-use B13\Container\Domain\Factory\PageView\Frontend\ContainerFactory;
-use B13\Container\Domain\Model\Container;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use B13\Container\Tca\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use B13\Container\Domain\Model\Container;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use FriendsOfTYPO3\Headless\DataProcessing\DataProcessingTrait;
-use TYPO3\CMS\Frontend\ContentObject\RecordsContentObject;
 
 class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcessor
 {
@@ -35,105 +32,66 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
         if (isset($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
             return $processedData;
         }
-        if ($processorConfiguration['contentId.'] ?? false) {
-            $contentId = (int)$cObj->stdWrap($processorConfiguration['contentId'], $processorConfiguration['contentId.']);
-        } elseif ($processorConfiguration['contentId'] ?? false) {
-            $contentId = (int)$processorConfiguration['contentId'];
-        } else {
-            $contentId = (int)$cObj->data['uid'];
-        }
 
-        try {
-            $container = $this->containerFactory->buildContainer($contentId);
-        } catch (Exception $e) {
-            // do nothing
+        $parentProcessedData = parent::process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+
+        if ($this->container instanceof Container === false) {
             return $processedData;
         }
 
-        $items = [];
         $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'items');
+        $sourceColPos = $cObj->stdWrapValue('colPos', $processorConfiguration);
+
+        $regexPattern = '\b(children_(\d+))\b';
+        if (empty($sourceColPos) === false) {
+            $regexPattern = '\b(children)\b';
+
+            if (empty($targetVariableName) === false) {
+                $regexPattern = '\b(' . $targetVariableName . ')\b';
+            }
+        }
+
+        $containerItems = array_filter($parentProcessedData, function ($key) use ($regexPattern) {
+            return preg_match('/' . $regexPattern . '/', $key) === 1;
+        }, ARRAY_FILTER_USE_KEY);
+
+
+        $items = [];
+        foreach ($containerItems as $key => $children) {
+            $contentElements = [];
+
+            preg_match('/' . $regexPattern . '/', $key, $matches);
+            $colPos = (int)$sourceColPos ?: (int)$matches[2];
+
+            foreach ($children as $child) {
+                $contentElements[] = \json_decode($child['renderedContent'], true);
+            }
+
+            /** @var Registry $containerRegistry */
+            $containerRegistry = GeneralUtility::makeInstance(Registry::class);
+
+            $items[] = [
+                'config' => [
+                    // TODO: As soon as https://github.com/b13/container/pull/330 is merged th name can be resolved properly
+//                    'name' => $this->getLanguageService()->sL(
+//                        $containerRegistry->getColPosName(
+//                            $this->container->getCType(),
+//                            $colPos
+//                        )
+//                    ),
+                    'colPos' => $colPos
+                ],
+                'contentElements' => $contentElements
+            ];
+        }
+
+        if (empty($sourceColPos) === false) {
+            $items = $items[0];
+        }
+
+        $processedData[$targetVariableName] = $items;
         $processorConfiguration['as'] = $targetVariableName;
-        if (empty($processorConfiguration['colPos']) && empty($processorConfiguration['colPos.'])) {
-            $allColPos = $container->getChildrenColPos();
-            foreach ($allColPos as $colPos) {
-                $items[] = $this->processColPos(
-                    $cObj,
-                    $container,
-                    $colPos,
-                    $targetVariableName,
-                    $processedData,
-                    $processorConfiguration
-                );
-            }
-
-            $processedData[$targetVariableName] = $items;
-
-        } else {
-            if ($processorConfiguration['colPos.'] ?? null) {
-                $colPos = (int)$cObj->stdWrap($processorConfiguration['colPos'], $processorConfiguration['colPos.']);
-            } else {
-                $colPos = (int)$processorConfiguration['colPos'];
-            }
-
-            $items = $this->processColPos(
-                $cObj,
-                $container,
-                $colPos,
-                $targetVariableName,
-                $processedData,
-                $processorConfiguration
-            );
-
-            $processedData[$targetVariableName] = $items;
-        }
-
         return $this->removeDataIfnotAppendInConfiguration($processorConfiguration, $processedData);
-    }
-
-    protected function processColPos(
-        ContentObjectRenderer $cObj,
-        Container $container,
-        int $colPos,
-        string $as,
-        array $processedData,
-        array $processorConfiguration
-    ): array
-    {
-        $children = $container->getChildrenByColPos($colPos);
-
-        $contentRecordRenderer = new RecordsContentObject($cObj);
-        $conf = [
-            'tables' => 'tt_content',
-        ];
-
-        $contentElements = [];
-        foreach ($children as &$child) {
-            if ($child['l18n_parent'] > 0) {
-                $conf['source'] = $child['l18n_parent'];
-            } else {
-                $conf['source'] = $child['uid'];
-            }
-            if ($child['t3ver_oid'] > 0) {
-                $conf['source'] = $child['t3ver_oid'];
-            }
-            $child['renderedContent'] = $cObj->render($contentRecordRenderer, $conf);
-            /** @var ContentObjectRenderer $recordContentObjectRenderer */
-            $recordContentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-            $recordContentObjectRenderer->start($child, 'tt_content');
-            $child = $this->contentDataProcessor->process($recordContentObjectRenderer, $processorConfiguration, $child);
-
-            $contentElements[] = \json_decode($child['renderedContent'], true);
-        }
-
-        /** @var Registry $containerRegistry */
-        $containerRegistry = GeneralUtility::makeInstance(Registry::class);
-        return [
-            'config' => [
-                'name' => $this->getLanguageService()->sL($containerRegistry->getColPosName($container->getCType(), $colPos)),
-                'colPos' => $colPos
-            ],
-            'contentElements' => $contentElements,
-        ];
     }
 
     protected function getLanguageService(): LanguageService
