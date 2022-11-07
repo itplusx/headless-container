@@ -55,7 +55,6 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             return preg_match('/' . $regexPattern . '/', $key) === 1;
         }, ARRAY_FILTER_USE_KEY);
 
-
         $items = [];
         foreach ($containerElements as $key => $children) {
             $contentElements = [];
