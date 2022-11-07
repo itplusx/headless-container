@@ -51,13 +51,13 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             }
         }
 
-        $containerItems = array_filter($parentProcessedData, function ($key) use ($regexPattern) {
+        $containerElements = array_filter($parentProcessedData, function ($key) use ($regexPattern) {
             return preg_match('/' . $regexPattern . '/', $key) === 1;
         }, ARRAY_FILTER_USE_KEY);
 
 
         $items = [];
-        foreach ($containerItems as $key => $children) {
+        foreach ($containerElements as $key => $children) {
             $contentElements = [];
 
             preg_match('/' . $regexPattern . '/', $key, $matches);
