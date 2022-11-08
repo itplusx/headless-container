@@ -33,11 +33,16 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             return $processedData;
         }
 
-        $parentProcessedData = parent::process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        try {
+            $contentId = (int)$cObj->stdWrapValue('contentId', $processorConfiguration, $cObj->data['uid']);
 
-        if ($this->container instanceof Container === false) {
+            /** @var Container $container */
+            $container = $this->containerFactory->buildContainer($contentId);
+        } catch (Exception $e) {
             return $processedData;
         }
+
+        $parentProcessedData = parent::process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
 
         $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'items');
         $sourceColPos = $cObj->stdWrapValue('colPos', $processorConfiguration);
@@ -71,13 +76,12 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
 
             $items[] = [
                 'config' => [
-                    // TODO: As soon as https://github.com/b13/container/pull/330 is merged th name can be resolved properly
-//                    'name' => $this->getLanguageService()->sL(
-//                        $containerRegistry->getColPosName(
-//                            $this->container->getCType(),
-//                            $colPos
-//                        )
-//                    ),
+                    'name' => $this->getLanguageService()->sL(
+                        $containerRegistry->getColPosName(
+                            $container->getCType(),
+                            $colPos
+                        )
+                    ),
                     'colPos' => $colPos
                 ],
                 'contentElements' => $contentElements
