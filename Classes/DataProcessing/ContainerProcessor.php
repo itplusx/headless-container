@@ -60,6 +60,9 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             return preg_match('/' . $regexPattern . '/', $key) === 1;
         }, ARRAY_FILTER_USE_KEY);
 
+        /** @var Registry $containerRegistry */
+        $containerRegistry = GeneralUtility::makeInstance(Registry::class);
+
         $items = [];
         foreach ($containerElements as $key => $children) {
             $contentElements = [];
@@ -70,9 +73,6 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             foreach ($children as $child) {
                 $contentElements[] = \json_decode($child['renderedContent'], true);
             }
-
-            /** @var Registry $containerRegistry */
-            $containerRegistry = GeneralUtility::makeInstance(Registry::class);
 
             $items[] = [
                 'config' => [
