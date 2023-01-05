@@ -43,12 +43,17 @@
   "replace": {
     "typo3-ter/headless-container": "self.version"
   },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
   "extra": {
     "branch-alias": {
       "dev-main": "0.8.x-dev"
     },
     "typo3/cms": {
-      "extension-key": "headless_container"
+      "extension-key": "headless_container",
+      "web-dir": ".Build/public"
     }
   }
 }
