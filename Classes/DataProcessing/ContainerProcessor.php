@@ -11,16 +11,25 @@ namespace ITplusX\HeadlessContainer\DataProcessing;
  * LICENSE.md file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Localization\LanguageService;
-use B13\Container\Tca\Registry;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use B13\Container\Domain\Model\Container;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use B13\Container\Tca\Registry;
 use FriendsOfTYPO3\Headless\DataProcessing\DataProcessingTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcessor
 {
     use DataProcessingTrait;
+
+    private LanguageServiceFactory $languageServiceFactory;
+
+    public function injectLanguageServiceFactory(LanguageServiceFactory $languageServiceFactory): void
+    {
+        $this->languageServiceFactory = $languageServiceFactory;
+    }
 
     public function process(
         ContentObjectRenderer $cObj,
@@ -76,7 +85,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
 
             $items[] = [
                 'config' => [
-                    'name' => $this->getLanguageService()->sL(
+                    'name' => $this->getLanguageService($cObj->getRequest())->sL(
                         $containerRegistry->getColPosName(
                             $container->getCType(),
                             $colPos
@@ -97,8 +106,11 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
         return $this->removeDataIfnotAppendInConfiguration($processorConfiguration, $processedData);
     }
 
-    protected function getLanguageService(): LanguageService
+    protected function getLanguageService(ServerRequestInterface $request): LanguageService
     {
-        return $GLOBALS['LANG'];
+        return $this->languageServiceFactory->createFromSiteLanguage(
+            $request->getAttribute('language')
+            ?? $request->getAttribute('site')->getDefaultLanguage()
+        );
     }
 }
