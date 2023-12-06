@@ -33,7 +33,7 @@ final class GridRecords
             ->where(
                 $queryBuilder->expr()->eq(
                     'pid',
-                    $queryBuilder->createNamedParameter($GLOBALS['TSFE']->id, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($GLOBALS['TSFE']->contentPid, \PDO::PARAM_INT)
                 ),
                 $queryBuilder->expr()->gt(
                     'tx_container_parent',
