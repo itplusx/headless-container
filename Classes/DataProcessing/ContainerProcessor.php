@@ -46,7 +46,7 @@ class ContainerProcessor extends \B13\Container\DataProcessing\ContainerProcesso
             $contentId = (int)$cObj->stdWrapValue('contentId', $processorConfiguration, $cObj->data['uid']);
 
             /** @var Container $container */
-            $container = $this->containerFactory->buildContainer($contentId);
+            $container = $this->frontendContainerFactory->buildContainer($cObj, $this->context, $contentId);
         } catch (\Exception $e) {
             return $processedData;
         }
