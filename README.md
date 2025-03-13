@@ -26,7 +26,7 @@ see: [Extension Management](https://docs.typo3.org/m/typo3/reference-coreapi/12.
 | PHP                                                    | >= 8.1      |
 | TYPO3                                                  | 12.4 & 13.4 |
 | [Headless](https://github.com/TYPO3-Headless/headless) | 4           |
-| [Container](https://github.com/b13/container)          | 2 - 3.1.1   |
+| [Container](https://github.com/b13/container)          | >= 3.1.2    |
 
 
 ## Usage
