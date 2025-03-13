@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = [
             'php' => '8.1.0-8.4.99',
             'typo3' => '12.4.3-13.4.99',
             'headless' => '4.0.0-4.99.99',
-            'container' => '2.0.0-3.1.1',
+            'container' => '3.1.2-3.99.99',
         ],
         'conflicts' => [],
         'suggests' => [],
