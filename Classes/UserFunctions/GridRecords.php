@@ -31,7 +31,13 @@ final class GridRecords
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
         $currentContentObject = $request->getAttribute('currentContentObject');
-        $pid = $currentContentObject->data['uid'];
+
+        if ($currentContentObject->data['content_from_pid']) {
+            $pid = $currentContentObject->data['content_from_pid'];
+        } else {
+            $pid = $currentContentObject->data['uid'];
+        }
+
         $result = $queryBuilder
             ->select('colPos','pid', 'tx_container_parent')
             ->from('tt_content')
