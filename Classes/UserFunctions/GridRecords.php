@@ -11,6 +11,7 @@ namespace ITplusX\HeadlessContainer\UserFunctions;
 
 use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Attribute\AsAllowedCallable;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,6 +28,7 @@ final class GridRecords
      * @return string Comma-separated list of colPos values associated to a grid column on the current page
      * @throws Exception
      */
+    #[AsAllowedCallable]
     public function getColPosList(string $content, array $conf, ServerRequestInterface $request): string
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
